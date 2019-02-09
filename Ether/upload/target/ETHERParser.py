@@ -8,23 +8,19 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r")
-        buf.write("\67\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3")
-        buf.write("\2\3\2\3\2\3\3\3\3\3\3\3\3\3\4\6\4\27\n\4\r\4\16\4\30")
-        buf.write("\3\5\7\5\34\n\5\f\5\16\5\37\13\5\3\6\3\6\3\6\3\6\3\6\3")
-        buf.write("\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7")
-        buf.write("\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\2\2\62\2\16\3\2\2")
-        buf.write("\2\4\21\3\2\2\2\6\26\3\2\2\2\b\35\3\2\2\2\n \3\2\2\2\f")
-        buf.write("*\3\2\2\2\16\17\5\4\3\2\17\20\7\2\2\3\20\3\3\2\2\2\21")
-        buf.write("\22\5\6\4\2\22\23\5\f\7\2\23\24\5\b\5\2\24\5\3\2\2\2\25")
-        buf.write("\27\5\n\6\2\26\25\3\2\2\2\27\30\3\2\2\2\30\26\3\2\2\2")
-        buf.write("\30\31\3\2\2\2\31\7\3\2\2\2\32\34\5\n\6\2\33\32\3\2\2")
-        buf.write("\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2\2\36\t\3\2")
-        buf.write("\2\2\37\35\3\2\2\2 !\7\b\2\2!\"\7\4\2\2\"#\7\n\2\2#$\7")
-        buf.write("\6\2\2$%\7\n\2\2%&\7\6\2\2&\'\7\13\2\2\'(\7\5\2\2()\7")
-        buf.write("\7\2\2)\13\3\2\2\2*+\7\t\2\2+,\7\4\2\2,-\7\n\2\2-.\7\6")
-        buf.write("\2\2./\7\n\2\2/\60\7\6\2\2\60\61\7\f\2\2\61\62\7\6\2\2")
-        buf.write("\62\63\7\13\2\2\63\64\7\5\2\2\64\65\7\7\2\2\65\r\3\2\2")
-        buf.write("\2\4\30\35")
+        buf.write("+\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3")
+        buf.write("\7\3\20\n\3\f\3\16\3\23\13\3\3\4\3\4\3\4\3\4\3\4\3\4\3")
+        buf.write("\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5")
+        buf.write("\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2\2(\2\n\3\2\2\2\4\21\3\2")
+        buf.write("\2\2\6\24\3\2\2\2\b\36\3\2\2\2\n\13\5\4\3\2\13\f\7\2\2")
+        buf.write("\3\f\3\3\2\2\2\r\20\5\b\5\2\16\20\5\6\4\2\17\r\3\2\2\2")
+        buf.write("\17\16\3\2\2\2\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2")
+        buf.write("\2\22\5\3\2\2\2\23\21\3\2\2\2\24\25\7\b\2\2\25\26\7\4")
+        buf.write("\2\2\26\27\7\n\2\2\27\30\7\6\2\2\30\31\7\n\2\2\31\32\7")
+        buf.write("\6\2\2\32\33\7\13\2\2\33\34\7\5\2\2\34\35\7\7\2\2\35\7")
+        buf.write("\3\2\2\2\36\37\7\t\2\2\37 \7\4\2\2 !\7\n\2\2!\"\7\6\2")
+        buf.write("\2\"#\7\n\2\2#$\7\6\2\2$%\7\f\2\2%&\7\6\2\2&\'\7\13\2")
+        buf.write("\2\'(\7\5\2\2()\7\7\2\2)\t\3\2\2\2\4\17\21")
         return buf.getvalue()
 
 
@@ -45,13 +41,10 @@ class ETHERParser ( Parser ):
 
     RULE_program = 0
     RULE_send = 1
-    RULE_sendeth_init = 2
-    RULE_sendeth_more = 3
-    RULE_sendeth = 4
-    RULE_sendtoken = 5
+    RULE_sendeth = 2
+    RULE_sendtoken = 3
 
-    ruleNames =  [ "program", "send", "sendeth_init", "sendeth_more", "sendeth", 
-                   "sendtoken" ]
+    ruleNames =  [ "program", "send", "sendeth", "sendtoken" ]
 
     EOF = Token.EOF
     WS=1
@@ -105,9 +98,9 @@ class ETHERParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_program)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 12
+            self.state = 8
             self.send()
-            self.state = 13
+            self.state = 9
             self.match(ETHERParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -123,16 +116,18 @@ class ETHERParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def sendeth_init(self):
-            return self.getTypedRuleContext(ETHERParser.Sendeth_initContext,0)
+        def sendtoken(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(ETHERParser.SendtokenContext)
+            else:
+                return self.getTypedRuleContext(ETHERParser.SendtokenContext,i)
 
 
-        def sendtoken(self):
-            return self.getTypedRuleContext(ETHERParser.SendtokenContext,0)
-
-
-        def sendeth_more(self):
-            return self.getTypedRuleContext(ETHERParser.Sendeth_moreContext,0)
+        def sendeth(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(ETHERParser.SendethContext)
+            else:
+                return self.getTypedRuleContext(ETHERParser.SendethContext,i)
 
 
         def getRuleIndex(self):
@@ -151,113 +146,28 @@ class ETHERParser ( Parser ):
 
         localctx = ETHERParser.SendContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_send)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 15
-            self.sendeth_init()
-            self.state = 16
-            self.sendtoken()
-            self.state = 17
-            self.sendeth_more()
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class Sendeth_initContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def sendeth(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(ETHERParser.SendethContext)
-            else:
-                return self.getTypedRuleContext(ETHERParser.SendethContext,i)
-
-
-        def getRuleIndex(self):
-            return ETHERParser.RULE_sendeth_init
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSendeth_init" ):
-                return visitor.visitSendeth_init(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def sendeth_init(self):
-
-        localctx = ETHERParser.Sendeth_initContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_sendeth_init)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 20 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while True:
-                self.state = 19
-                self.sendeth()
-                self.state = 22 
+            while _la==ETHERParser.SENDETH or _la==ETHERParser.SENDTOKEN:
+                self.state = 13
                 self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if not (_la==ETHERParser.SENDETH):
-                    break
+                token = self._input.LA(1)
+                if token in [ETHERParser.SENDTOKEN]:
+                    self.state = 11
+                    self.sendtoken()
+                    pass
+                elif token in [ETHERParser.SENDETH]:
+                    self.state = 12
+                    self.sendeth()
+                    pass
+                else:
+                    raise NoViableAltException(self)
 
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class Sendeth_moreContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def sendeth(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(ETHERParser.SendethContext)
-            else:
-                return self.getTypedRuleContext(ETHERParser.SendethContext,i)
-
-
-        def getRuleIndex(self):
-            return ETHERParser.RULE_sendeth_more
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSendeth_more" ):
-                return visitor.visitSendeth_more(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def sendeth_more(self):
-
-        localctx = ETHERParser.Sendeth_moreContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_sendeth_more)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 27
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while _la==ETHERParser.SENDETH:
-                self.state = 24
-                self.sendeth()
-                self.state = 29
+                self.state = 17
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -317,26 +227,26 @@ class ETHERParser ( Parser ):
     def sendeth(self):
 
         localctx = ETHERParser.SendethContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_sendeth)
+        self.enterRule(localctx, 4, self.RULE_sendeth)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 30
+            self.state = 18
             self.match(ETHERParser.SENDETH)
-            self.state = 31
+            self.state = 19
             self.match(ETHERParser.LB)
-            self.state = 32
+            self.state = 20
             self.match(ETHERParser.ADDRESS)
-            self.state = 33
+            self.state = 21
             self.match(ETHERParser.COMA)
-            self.state = 34
+            self.state = 22
             self.match(ETHERParser.ADDRESS)
-            self.state = 35
+            self.state = 23
             self.match(ETHERParser.COMA)
-            self.state = 36
+            self.state = 24
             self.match(ETHERParser.AMOUNT)
-            self.state = 37
+            self.state = 25
             self.match(ETHERParser.RB)
-            self.state = 38
+            self.state = 26
             self.match(ETHERParser.SEMI)
         except RecognitionException as re:
             localctx.exception = re
@@ -397,30 +307,30 @@ class ETHERParser ( Parser ):
     def sendtoken(self):
 
         localctx = ETHERParser.SendtokenContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_sendtoken)
+        self.enterRule(localctx, 6, self.RULE_sendtoken)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 40
+            self.state = 28
             self.match(ETHERParser.SENDTOKEN)
-            self.state = 41
+            self.state = 29
             self.match(ETHERParser.LB)
-            self.state = 42
+            self.state = 30
             self.match(ETHERParser.ADDRESS)
-            self.state = 43
+            self.state = 31
             self.match(ETHERParser.COMA)
-            self.state = 44
+            self.state = 32
             self.match(ETHERParser.ADDRESS)
-            self.state = 45
+            self.state = 33
             self.match(ETHERParser.COMA)
-            self.state = 46
+            self.state = 34
             self.match(ETHERParser.TOKENID)
-            self.state = 47
+            self.state = 35
             self.match(ETHERParser.COMA)
-            self.state = 48
+            self.state = 36
             self.match(ETHERParser.AMOUNT)
-            self.state = 49
+            self.state = 37
             self.match(ETHERParser.RB)
-            self.state = 50
+            self.state = 38
             self.match(ETHERParser.SEMI)
         except RecognitionException as re:
             localctx.exception = re

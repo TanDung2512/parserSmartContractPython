@@ -19,16 +19,6 @@ class ETHERVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ETHERParser#sendeth_init.
-    def visitSendeth_init(self, ctx:ETHERParser.Sendeth_initContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ETHERParser#sendeth_more.
-    def visitSendeth_more(self, ctx:ETHERParser.Sendeth_moreContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ETHERParser#sendeth.
     def visitSendeth(self, ctx:ETHERParser.SendethContext):
         return self.visitChildren(ctx)
