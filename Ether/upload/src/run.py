@@ -10,7 +10,7 @@ import subprocess
 import unittest
 from antlr4 import *
 
-ANTLR_JAR = os.environ.get('ANTLR_LIB')
+ANTLR_JAR = "/usr/local/lib/antlr-4.7.1-complete.jar"
 TARGET_DIR = '../target'
 GENERATE_DIR = 'main/ether/parser'
 

@@ -141,7 +141,8 @@ class TestStateGen:
         parser = Parser(tokens)
         tree = parser.program()
         state = StateGen().visit(tree)
-        dest.write(str(state))
+
+        dest.write(str(state).replace('\\n', "\n"))
         dest.close()
 """
 class TestChecker:
