@@ -31,7 +31,7 @@ class StateGen(ETHERVisitor):
 
     # Visit a parse tree produced by ETHERParser#send.
     def visitSend(self, ctx: ETHERParser.SendContext):
-        sendlist = [ctx.getChild(x) for x in range(0, ctx.getChildCount() - 1)]
+        sendlist = [ctx.getChild(x) for x in range(0, ctx.getChildCount())]
         Users = []
         for x in sendlist:
             if x.ADDRESS(0).getText() not in Users: Users.append(x.ADDRESS(0).getText())
@@ -44,18 +44,18 @@ class StateGen(ETHERVisitor):
     def visitSendeth(self, ctx: ETHERParser.SendethContext):
         for x in self.State.users:
             if x.address == ctx.ADDRESS(0).getText():
-                x.ether += int(ctx.AMOUNT().getText())
-            if x.address == ctx.ADDRESS(1).getText():
                 x.ether -= int(ctx.AMOUNT().getText())
+            if x.address == ctx.ADDRESS(1).getText():
+                x.ether += int(ctx.AMOUNT().getText())
         return str(self.State)
 
     # Visit a parse tree produced by ETHERParser#sendtoken.
     def visitSendtoken(self, ctx: ETHERParser.SendtokenContext):
         for x in self.State.users:
             if x.address == ctx.ADDRESS(0).getText():
-                x.token += int(ctx.AMOUNT().getText())
-            if x.address == ctx.ADDRESS(1).getText():
                 x.token -= int(ctx.AMOUNT().getText())
+            if x.address == ctx.ADDRESS(1).getText():
+                x.token += int(ctx.AMOUNT().getText())
         return str(self.State)
 
 

@@ -9,6 +9,9 @@ from ETHERLexer import ETHERLexer
 from ETHERParser import ETHERParser
 from StateGen import StateGen
 from lexererr import *
+import json
+import re
+import functools
 #from ASTGeneration import ASTGeneration
 """from StaticCheck import StaticChecker
 from StaticError import *
@@ -70,80 +73,54 @@ class SyntaxException(Exception):
     def __init__(self,msg):
         self.message = msg
 
-class TestParser:
-    @staticmethod
-    def createErrorListener():
-         return NewErrorListener.INSTANCE
-
-    @staticmethod
-    def test(input,expect,num):
-        inputfile = TestUtil.makeSource(input,num)
-        TestParser.check(SOL_DIR,inputfile,num)
-        dest = open(SOL_DIR + str(num) + ".txt","r")
-        line = dest.read()
-        return line == expect
-
-    @staticmethod
-    def check(soldir,inputfile,num):
-        dest = open(soldir + "/" + str(num) + ".txt","w")
-        lexer = Lexer(inputfile)
-        listener = TestParser.createErrorListener()
-        tokens = CommonTokenStream(lexer)
-        parser = Parser(tokens)
-        parser.removeErrorListeners()
-        parser.addErrorListener(listener)
-        try:
-            parser.program()
-            dest.write("successful")
-        except SyntaxException as f:
-            dest.write(f.message)
-        except Exception as e:
-            dest.write(str(e))
-        finally:
-            dest.close()
-
-
-
-class TestAST:
-    @staticmethod
-    def test(input,expect,num):
-        inputfile = TestUtil.makeSource(input,num)
-        TestAST.check(SOL_DIR,inputfile,num)
-        dest = open(SOL_DIR + str(num) + ".txt","r")
-        line = dest.read()
-        return line == expect
-
-    @staticmethod
-    def check(soldir,inputfile,num):
-        dest = open(soldir + "/" + str(num) + ".txt","w")
-        lexer = Lexer(inputfile)
-        tokens = CommonTokenStream(lexer)
-        parser = Parser(tokens)
-        tree = parser.program()
-        asttree = ASTGeneration().visit(tree)
-        dest.write(str(asttree))
-        dest.close()
 
 class TestStateGen:
     @staticmethod
     def test(input,expect,num):
+
         inputfile = TestUtil.makeSource(input,num)
         TestStateGen.check(SOL_DIR,inputfile,num)
-        dest = open(SOL_DIR + str(num) + ".txt","r")
+        dest = open(SOL_DIR  + "sendEther.txt","r")
         line = dest.read()
+
+
         return line == expect
 
     @staticmethod
     def check(soldir,inputfile,num):
-        dest = open(soldir + "/" + str(num) + ".txt","w")
+        dest = open(soldir + "sendEther" + ".txt","w")
+
         lexer = Lexer(inputfile)
         tokens = CommonTokenStream(lexer)
         parser = Parser(tokens)
         tree = parser.program()
         state = StateGen().visit(tree)
+        dest.write(str(state))
+        inputfile = str(inputfile).replace(" ;",";")
+        inputfile = str(inputfile).replace("\n","")
 
-        dest.write(str(state).replace('\\n', "\n"))
+        # print(str(state[0]).replace("), ",")")[:-1])
+        # m = re.findall("\[((^0x[A-Z]+)\(([0-9]+), ([0-9]+)\))*\]", str(state[0]).replace("), ",")")[:-1])
+        m = re.findall("(0x[0-9a-fA-F]+)\(([0-9]*), ([0-9]*)\)", str(state[0]).replace("), ",") ")[:-1])
+
+
+        jsonResponse = [
+            {
+                'transaction' : 'initial state',
+                'account_state': functools.reduce(lambda x,y: x+[{"name" : y[0], "ether" : y[1] , "token" : y[2]}],m,[])
+
+            }
+        ]
+
+        for i in range(1,len(state)):
+            m = re.findall("(0x[0-9a-fA-F]+)\(([0-9]*), ([0-9]*)\)", str(state[i]).replace("), ",") ")[:-1])
+            jsonResponse += [({'transaction' : inputfile.split(';')[i-1],
+                               'account_state': functools.reduce(
+                                   lambda x, y: x + [{"name": y[0], "ether": y[1], "token": y[2]}], m, [])
+                               })]
+        print(json.dumps(jsonResponse))
         dest.close()
+
 """
 class TestChecker:
     @staticmethod
